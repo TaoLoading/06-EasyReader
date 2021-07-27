@@ -1,5 +1,21 @@
 <template>
   <div class="ebook">
+    <div class="title-wrapper">
+      <div class="left">
+        <span class="iconfont  icon-fanhui- icon"></span>
+      </div>
+      <div class="right">
+        <div class="icon-wrapper">
+          <span class="iconfont  icon-htmal5icon29 icon"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="iconfont  icon-user icon"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="iconfont  icon-qita icon"></span>
+        </div>
+      </div>
+    </div>
     <div class="read-wrapper">
       <div id="read"></div>
       <div class="mask">

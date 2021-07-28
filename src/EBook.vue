@@ -1,12 +1,13 @@
 <template>
   <div class="ebook">
-    <div class="title-wrapper">
+    <!-- 头部菜单区 -->
+    <div class="top-wrapper">
       <div class="left">
         <span class="iconfont  icon-fanhui- icon"></span>
       </div>
       <div class="right">
         <div class="icon-wrapper">
-          <span class="iconfont  icon-htmal5icon29 icon"></span>
+          <span class="iconfont  icon-gouwuche icon"></span>
         </div>
         <div class="icon-wrapper">
           <span class="iconfont  icon-user icon"></span>
@@ -16,6 +17,7 @@
         </div>
       </div>
     </div>
+    <!-- 电子书展示区 -->
     <div class="read-wrapper">
       <div id="read"></div>
       <div class="mask">
@@ -24,6 +26,21 @@
         <div class="center"></div>
         <div class="right"
              @click="nextPage"></div>
+      </div>
+    </div>
+    <!-- 底部菜单区 -->
+    <div class="bottom-wrapper">
+      <div class="icon-wrapper">
+        <span class="iconfont  icon-liebiao icon"></span>
+      </div>
+      <div class="icon-wrapper">
+        <span class="iconfont  icon-tiaojie icon"></span>
+      </div>
+      <div class="icon-wrapper">
+        <span class="iconfont  icon-ai250 icon"></span>
+      </div>
+      <div class="icon-wrapper">
+        <span class="iconfont  icon-ziti icon"></span>
       </div>
     </div>
   </div>
@@ -71,6 +88,34 @@ export default {
 @import "assets/styles/global.scss";
 .ebook {
   position: relative;
+  .top-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 101;
+    display: flex;
+    width: 100%;
+    height: px2rem(48);
+    background: #fff;
+    box-shadow: 0 px2rem(8) px2rem(8) rgba(0, 0, 0, 0.15);
+    .left {
+      flex: 0 0 px2rem(60);
+      @include center;
+    }
+    .right {
+      flex: 1;
+      display: flex;
+      // 居右排列
+      justify-content: flex-end;
+      .icon-wrapper {
+        flex: 0 0 px2rem(40);
+        @include center;
+        .icon-gouwuche {
+          font-size: px2rem(24);
+        }
+      }
+    }
+  }
   .read-wrapper {
     .mask {
       position: absolute;
@@ -88,6 +133,24 @@ export default {
       }
       .right {
         flex: 0 0 px2rem(100);
+      }
+    }
+  }
+  .bottom-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 101;
+    display: flex;
+    width: 100%;
+    height: px2rem(48);
+    background: #fff;
+    box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, 0.15);
+    .icon-wrapper {
+      flex: 1;
+      @include center;
+      .icon {
+        font-size: px2rem(24);
       }
     }
   }

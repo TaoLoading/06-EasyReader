@@ -1,48 +1,55 @@
 <template>
   <div class="ebook">
     <!-- 头部菜单区 -->
-    <div class="top-wrapper">
-      <div class="left">
-        <span class="iconfont  icon-fanhui- icon"></span>
+    <transition name="slide-down">
+      <div class="top-wrapper"
+           v-show="ifShow">
+        <div class="left">
+          <span class="iconfont  icon-fanhui- icon"></span>
+        </div>
+        <div class="right">
+          <div class="icon-wrapper">
+            <span class="iconfont  icon-gouwuche icon"></span>
+          </div>
+          <div class="icon-wrapper">
+            <span class="iconfont  icon-user icon"></span>
+          </div>
+          <div class="icon-wrapper">
+            <span class="iconfont  icon-qita icon"></span>
+          </div>
+        </div>
       </div>
-      <div class="right">
-        <div class="icon-wrapper">
-          <span class="iconfont  icon-gouwuche icon"></span>
-        </div>
-        <div class="icon-wrapper">
-          <span class="iconfont  icon-user icon"></span>
-        </div>
-        <div class="icon-wrapper">
-          <span class="iconfont  icon-qita icon"></span>
-        </div>
-      </div>
-    </div>
+    </transition>
     <!-- 电子书展示区 -->
     <div class="read-wrapper">
       <div id="read"></div>
       <div class="mask">
         <div class="left"
              @click="prevPage"></div>
-        <div class="center"></div>
+        <div class="center"
+             @click="show"></div>
         <div class="right"
              @click="nextPage"></div>
       </div>
     </div>
     <!-- 底部菜单区 -->
-    <div class="bottom-wrapper">
-      <div class="icon-wrapper">
-        <span class="iconfont  icon-liebiao icon"></span>
+    <transition name="slide-up">
+      <div class="bottom-wrapper"
+           v-show="ifShow">
+        <div class="icon-wrapper">
+          <span class="iconfont  icon-liebiao icon"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="iconfont  icon-tiaojie icon"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="iconfont  icon-ai250 icon"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="iconfont  icon-ziti icon"></span>
+        </div>
       </div>
-      <div class="icon-wrapper">
-        <span class="iconfont  icon-tiaojie icon"></span>
-      </div>
-      <div class="icon-wrapper">
-        <span class="iconfont  icon-ai250 icon"></span>
-      </div>
-      <div class="icon-wrapper">
-        <span class="iconfont  icon-ziti icon"></span>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
  
@@ -52,6 +59,11 @@ import Epub from 'epubjs'
 const DOWNLOAD_URL = '/static/test01.epub'
 global.ePub = Epub
 export default {
+  data() {
+    return {
+      ifShow: false
+    }
+  },
   methods: {
     // 电子书解析和渲染
     showEpub() {
@@ -76,6 +88,9 @@ export default {
       if (this.rendition) {
         this.rendition.next()
       }
+    },
+    show() {
+      this.ifShow = !this.ifShow
     }
   },
   mounted() {

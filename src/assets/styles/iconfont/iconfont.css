@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2702549 */
-  src: url('iconfont.woff2?t=1627354536747') format('woff2'),
-       url('iconfont.woff?t=1627354536747') format('woff'),
-       url('iconfont.ttf?t=1627354536747') format('truetype');
+  src: url('iconfont.woff2?t=1627439302475') format('woff2'),
+       url('iconfont.woff?t=1627439302475') format('woff'),
+       url('iconfont.ttf?t=1627439302475') format('truetype');
 }
 
 .iconfont {
@@ -13,42 +13,38 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 购物车 */
-.icon-htmal5icon29:before {
-  content: "\e641";
+.icon-ziti:before {
+  content: "\e61d";
 }
 
-/* 太阳 */
+.icon-gouwuche:before {
+  content: "\e620";
+}
+
 .icon-ai250:before {
   content: "\e6ee";
 }
 
-/* 列表 */
 .icon-liebiao:before {
   content: "\e62d";
 }
 
-/* 分享 */
 .icon-fenxiang:before {
   content: "\e604";
 }
 
-/* 返回 */
 .icon-fanhui-:before {
   content: "\e646";
 }
 
-/* 调节 */
 .icon-tiaojie:before {
   content: "\e6be";
 }
 
-/* 其他 */
 .icon-qita:before {
   content: "\e60b";
 }
 
-/* 用户 */
 .icon-user:before {
   content: "\e614";
 }

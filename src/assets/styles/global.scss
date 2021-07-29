@@ -23,7 +23,7 @@ $fontSize: 37.5;
   transform: translate3d(0, -100%, 0);
 }
 .slideUp-enter, .slideUp-leave-to {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, px2rem(108), 0);
 }
 .slideDown-enter-to, .slideDown-leave,.slideUp-enter-to,.slideUp-leave{
   transform: translate3d(0, 0, 0);

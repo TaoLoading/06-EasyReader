@@ -16,6 +16,9 @@
     </div>
     <!-- 底部菜单区 -->
     <bottom-bar :ifShow="ifShow"
+                :fontSizeList="fontSizeList"
+                :defaultFontSize="defaultFontSize"
+                @setFontSize="setFontSize"
                 ref="bottomBar"></bottom-bar>
   </div>
 </template>
@@ -34,12 +37,24 @@ export default {
   },
   data() {
     return {
-      ifShow: false
+      ifShow: false,
+      // 字号列表
+      fontSizeList: [
+        { fontSize: 12 },
+        { fontSize: 14 },
+        { fontSize: 16 },
+        { fontSize: 18 },
+        { fontSize: 20 },
+        { fontSize: 22 },
+        { fontSize: 24 },
+      ],
+      defaultFontSize: 16
     }
   },
   methods: {
-    // 电子书解析和渲染
+    // 解析电子书
     showEpub() {
+      // 电子书的渲染
       // 1.生成Ebook
       this.book = new Epub(DOWNLOAD_URL)
       // 2.生成Rendition,通过Book.renderTo方法生成
@@ -49,6 +64,12 @@ export default {
       })
       // 3.通过Rendition.display渲染电子书
       this.rendition.display()
+
+      // 修改字体
+      // 获取Theme对象
+      this.themes = this.rendition.themes
+      // 设置默认字体
+      this.setFontSize(this.defaultFontSize)
     },
     // 返回上一页
     prevPage() {
@@ -62,11 +83,19 @@ export default {
         this.rendition.next()
       }
     },
+    // 菜单区的展示与隐藏
     show() {
       this.ifShow = !this.ifShow
       if (this.ifShow == false) {
         // 隐藏字体设置区
         this.$refs.bottomBar.hideSetting()
+      }
+    },
+    // 设置字体
+    setFontSize(fontSize) {
+      this.defaultFontSize = fontSize
+      if (this.themes) {
+        this.themes.fontSize(fontSize + 'px')
       }
     }
   },

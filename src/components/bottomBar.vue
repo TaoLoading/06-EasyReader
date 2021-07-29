@@ -12,11 +12,12 @@
           <span class="iconfont  icon-tiaojie icon"></span>
         </div>
         <div class="iconWrapper">
-          <span class="iconfont  icon-ai250 icon"></span>
+          <span class="iconfont  icon-ai250 icon"
+                @click="showSetting(1)"></span>
         </div>
         <div class="iconWrapper">
           <span class="iconfont  icon-ziti icon"
-                @click="showSetting"></span>
+                @click="showSetting(0)"></span>
         </div>
       </div>
     </transition>
@@ -25,11 +26,12 @@
       <div class="settingWrapper"
            v-show="ifSettingShow">
         <!-- 字体设置区 -->
-        <div class="fontSize">
+        <div class="fontSize"
+             v-if="showTag === 0">
           <div class="preview"
                :style="{fontSize: this.fontSizeList[0].fontSize + 'px'}">A</div>
           <!-- 字体调节区 -->
-          <div class="selectFontSize"
+          <div class="settingFontSize"
                v-for="(item, index) in fontSizeList"
                :key="index"
                @click="setFontSize(item.fontSize)">
@@ -45,6 +47,21 @@
           <div class="preview"
                :style="{fontSize: this.fontSizeList[fontSizeList.length - 1].fontSize + 'px'}">A</div>
         </div>
+        <!-- 主题设置区 -->
+        <div class="Theme"
+             v-else-if="showTag === 1">
+          <!-- 主题调节区 -->
+          <div class="settingTheme"
+               v-for="(item, index) in themeList"
+               :key="index"
+               @click="setTheme(index)">
+            <div class="preview"
+                 :style="{background:item.style.body.background}"
+                 :class="{'noBorder':item.style.body.background !== '#fff'}"></div>
+            <div class="text"
+                 :class="{'selected':index===defaultTheme}">{{item.name}}</div>
+          </div>
+        </div>
       </div>
     </transition>
   </div>
@@ -59,17 +76,21 @@ export default {
       default: false
     },
     fontSizeList: Array,
-    defaultFontSize: Number
+    defaultFontSize: Number,
+    themeList: Array,
+    defaultTheme: Number
   },
   data() {
     return {
       ifSettingShow: false,
+      showTag: 0
     }
   },
   methods: {
     // 展示设置区
-    showSetting() {
-      this.ifSettingShow = !this.ifSettingShow
+    showSetting(tag) {
+      this.ifSettingShow = true
+      this.showTag = tag
     },
     // 隐藏设置区
     hideSetting() {
@@ -79,6 +100,10 @@ export default {
     setFontSize(fontSize) {
       // 调用父组件的setFontSize()，因为调节字体需要用到epubjs
       this.$emit('setFontSize', fontSize)
+    },
+    // 设置主题
+    setTheme(index) {
+      this.$emit('setTheme', index)
     }
   }
 }
@@ -124,7 +149,7 @@ export default {
         flex: 0 0 px2rem(40);
         @include center;
       }
-      .selectFontSize {
+      .settingFontSize {
         flex: 1;
         display: flex;
         align-items: center;
@@ -156,6 +181,34 @@ export default {
               background: #000;
               border-radius: 50%;
             }
+          }
+        }
+      }
+    }
+    .Theme {
+      display: flex;
+      height: 100%;
+      .settingTheme {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: px2rem(5);
+        box-sizing: border-box;
+        .preview {
+          flex: 1;
+          border: px2rem(1) solid #ccc;
+          box-sizing: border-box;
+          &.noBorder {
+            border: none;
+          }
+        }
+        .text {
+          @include center;
+          flex: 0 0 px2rem(15);
+          font-size: px2rem(14);
+          color: #999;
+          &.selected {
+            color: #333;
           }
         }
       }

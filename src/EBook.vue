@@ -19,6 +19,9 @@
                 :fontSizeList="fontSizeList"
                 :defaultFontSize="defaultFontSize"
                 @setFontSize="setFontSize"
+                :themeList="themeList"
+                :defaultTheme="defaultTheme"
+                @setTheme="setTheme"
                 ref="bottomBar"></bottom-bar>
   </div>
 </template>
@@ -48,11 +51,50 @@ export default {
         { fontSize: 22 },
         { fontSize: 24 },
       ],
-      defaultFontSize: 16
+      defaultFontSize: 16,
+      themeList: [
+        // 默认主题
+        {
+          name: 'default',
+          style: {
+            body: {
+              'color': '#000', 'background': '#fff'
+            }
+          }
+        },
+        // 护眼主题
+        {
+          name: 'eye',
+          style: {
+            body: {
+              'color': '#000', 'background': '#ceeaba'
+            }
+          }
+        },
+        // 夜间主题
+        {
+          name: 'night',
+          style: {
+            body: {
+              'color': '#fff', 'background': '#000'
+            }
+          }
+        },
+        // 书本主题
+        {
+          name: 'book',
+          style: {
+            body: {
+              'color': '#000', 'background': '#f6dda8'
+            }
+          }
+        },
+      ],
+      defaultTheme: 0
     }
   },
   methods: {
-    // 解析电子书
+    // 使用epubjs对电子书进行解析与设置
     showEpub() {
       // 电子书的渲染
       // 1.生成Ebook
@@ -70,6 +112,14 @@ export default {
       this.themes = this.rendition.themes
       // 设置默认字体
       this.setFontSize(this.defaultFontSize)
+
+      // 修改主题
+      // 1.遍历数组获取主题
+      this.themeList.forEach(theme => {
+        // 2.使用Theme.register注册主题
+        this.themes.register(theme.name, theme.style)
+      })
+      // 3.使用Theme.select修改主题(点击时触发)
     },
     // 返回上一页
     prevPage() {
@@ -97,6 +147,11 @@ export default {
       if (this.themes) {
         this.themes.fontSize(fontSize + 'px')
       }
+    },
+    // 设置主题
+    setTheme(index) {
+      this.themes.select(this.themeList[index].name)
+      this.defaultTheme = index
     }
   },
   mounted() {

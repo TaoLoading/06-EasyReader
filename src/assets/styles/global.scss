@@ -19,15 +19,15 @@ $fontSize: 37.5;
 }
 
 // 菜单栏移入移出过渡动画
-.slide-down-enter, .slide-down-leave-to {
+.slideDown-enter, .slideDown-leave-to {
   transform: translate3d(0, -100%, 0);
 }
-.slide-up-enter, .slide-up-leave-to {
+.slideUp-enter, .slideUp-leave-to {
   transform: translate3d(0, 100%, 0);
 }
-.slide-down-enter-to, .slide-down-leave,.slide-up-enter-to,.slide-up-leave{
+.slideDown-enter-to, .slideDown-leave,.slideUp-enter-to,.slideUp-leave{
   transform: translate3d(0, 0, 0);
 }
-.slide-down-enter-active, .slide-down-leave-active, .slide-up-enter-active, .slide-up-leave-active {
+.slideDown-enter-active, .slideDown-leave-active, .slideUp-enter-active, .slideUp-leave-active {
   transition: all .3s linear;
 }

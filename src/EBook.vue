@@ -3,7 +3,7 @@
     <!-- 头部菜单区 -->
     <top-bar :ifShow="ifShow"></top-bar>
     <!-- 电子书展示区 -->
-    <div class="read-wrapper">
+    <div class="readWrapper">
       <div id="read"></div>
       <div class="mask">
         <div class="left"
@@ -15,7 +15,8 @@
       </div>
     </div>
     <!-- 底部菜单区 -->
-    <bottom-bar :ifShow="ifShow"></bottom-bar>
+    <bottom-bar :ifShow="ifShow"
+                ref="bottomBar"></bottom-bar>
   </div>
 </template>
  
@@ -63,6 +64,10 @@ export default {
     },
     show() {
       this.ifShow = !this.ifShow
+      if (this.ifShow == false) {
+        // 隐藏字体设置区
+        this.$refs.bottomBar.hideSetting()
+      }
     }
   },
   mounted() {
@@ -75,7 +80,7 @@ export default {
 @import "assets/styles/global.scss";
 .ebook {
   position: relative;
-  .read-wrapper {
+  .readWrapper {
     .mask {
       position: absolute;
       top: 0;

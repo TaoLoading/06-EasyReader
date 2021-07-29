@@ -1,30 +1,35 @@
 <template>
-  <transition name="slide-down">
-    <div class="top-wrapper"
-         v-show="ifShow">
-      <div class="left">
-        <span class="iconfont  icon-fanhui- icon"></span>
+  <div class="topBar">
+    <transition name="slideDown">
+      <div class="topWrapper"
+           v-show="ifShow">
+        <div class="left">
+          <span class="iconfont  icon-fanhui- icon"></span>
+        </div>
+        <div class="right">
+          <div class="iconWrapper">
+            <span class="iconfont  icon-gouwuche icon"></span>
+          </div>
+          <div class="iconWrapper">
+            <span class="iconfont  icon-user icon"></span>
+          </div>
+          <div class="iconWrapper">
+            <span class="iconfont  icon-qita icon"></span>
+          </div>
+        </div>
       </div>
-      <div class="right">
-        <div class="icon-wrapper">
-          <span class="iconfont  icon-gouwuche icon"></span>
-        </div>
-        <div class="icon-wrapper">
-          <span class="iconfont  icon-user icon"></span>
-        </div>
-        <div class="icon-wrapper">
-          <span class="iconfont  icon-qita icon"></span>
-        </div>
-      </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'TopBar',
   props: {
-    ifShow: Boolean
+    ifShow: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -38,7 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/styles/global.scss";
-.top-wrapper {
+.topWrapper {
   position: absolute;
   top: 0;
   left: 0;
@@ -57,7 +62,7 @@ export default {
     display: flex;
     // 居右排列
     justify-content: flex-end;
-    .icon-wrapper {
+    .iconWrapper {
       flex: 0 0 px2rem(40);
       @include center;
       .icon-gouwuche {

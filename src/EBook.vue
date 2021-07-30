@@ -99,7 +99,7 @@ export default {
       // 电子书的渲染
       // 1.生成Ebook
       this.book = new Epub(DOWNLOAD_URL)
-      // 2.生成Rendition,通过Book.renderTo方法生成
+      // 2.生成Rendition，通过Book.renderTo方法生成
       this.rendition = this.book.renderTo('read', {
         width: window.innerWidth,
         height: window.innerHeight
@@ -150,8 +150,11 @@ export default {
     },
     // 设置主题
     setTheme(index) {
+      // debugger
+      // bug描述：点击时能够获取点击主题的this.themeList[index].name，但所有主题只能触发一次
       this.themes.select(this.themeList[index].name)
       this.defaultTheme = index
+      console.log(this.themeList[index].name)
     }
   },
   mounted() {

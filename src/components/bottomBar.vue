@@ -6,7 +6,8 @@
            v-show="ifShow"
            :class="{'hideBoxShadow':ifSettingShow || !ifShow}">
         <div class="iconWrapper">
-          <span class="iconfont  icon-liebiao icon"></span>
+          <span class="iconfont  icon-liebiao icon"
+                @click="showSetting(3)"></span>
         </div>
         <div class="iconWrapper">
           <span class="iconfont  icon-tiaojie icon"
@@ -83,12 +84,27 @@
         </div>
       </div>
     </transition>
+    <!-- 目录区 -->
+    <content-view :ifContentShow="ifContentShow"
+                  v-show="ifContentShow"
+                  :navigation="navigation"
+                  :bookAvailable="bookAvailable"
+                  @jumpTo="jumpTo"></content-view>
+    <transition name="fade">
+      <div class="contentMask"
+           v-show="ifContentShow"
+           @click="hideContent"></div>
+    </transition>
   </div>
 </template>
 
 <script>
+import ContentView from '@/components/content.vue'
 export default {
   name: 'BottomBar',
+  components: {
+    ContentView
+  },
   props: {
     ifShow: {
       type: Boolean,
@@ -98,6 +114,7 @@ export default {
     defaultFontSize: Number,
     themeList: Array,
     defaultTheme: Number,
+    navigation: Object,
     bookAvailable: {
       type: Boolean,
       default: false
@@ -107,14 +124,20 @@ export default {
     return {
       ifSettingShow: false,
       showTag: 0,
-      progress: 0
+      progress: 0,
+      ifContentShow: false
     }
   },
   methods: {
-    // 展示设置区
+    // 当前展示区
     showSetting(tag) {
-      this.ifSettingShow = true
       this.showTag = tag
+      if (this.showTag === 3) {
+        this.ifSettingShow = false
+        this.ifContentShow = true
+      } else {
+        this.ifSettingShow = true
+      }
     },
     // 隐藏设置区
     hideSetting() {
@@ -137,6 +160,14 @@ export default {
     onProgressInput(progress) {
       this.progress = progress
       this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
+    },
+    // 跳转方法，调用父组件方法
+    jumpTo(target) {
+      this.$emit('jumpTo', target)
+    },
+    // 隐藏目录
+    hideContent() {
+      this.ifContentShow = false
     }
   }
 }
@@ -274,6 +305,16 @@ export default {
         }
       }
     }
+  }
+  .contentMask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 101;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: rgba(51, 51, 51, 0.8);
   }
 }
 </style>

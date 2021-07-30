@@ -18,16 +18,25 @@ $fontSize: 37.5;
   font-size: px2rem(20);
 }
 
-// 菜单栏移入移出过渡动画
+// 移入移出过渡动画
 .slideDown-enter, .slideDown-leave-to {
   transform: translate3d(0, -100%, 0);
 }
 .slideUp-enter, .slideUp-leave-to {
   transform: translate3d(0, px2rem(108), 0);
 }
-.slideDown-enter-to, .slideDown-leave,.slideUp-enter-to,.slideUp-leave{
+.slideDown-enter-to, .slideDown-leave, .slideUp-enter-to,  .slideUp-leave{
   transform: translate3d(0, 0, 0);
 }
-.slideDown-enter-active, .slideDown-leave-active, .slideUp-enter-active, .slideUp-leave-active {
+.slideDown-enter-active, .slideDown-leave-active, .slideUp-enter-active, .slideUp-leave-active, .fade-enter-active, .fade-leave-active, .slideRight-enter-active, .slideRight-leave-active {
   transition: all .3s linear;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to, .fade-leave {
+  opacity: 1 ;
+}
+.slideRight-enter, .slideRight-leave-to {
+  transform: translate3d(-100%, 0, 0);
 }

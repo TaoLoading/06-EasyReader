@@ -24,6 +24,8 @@
                 @setTheme="setTheme"
                 :bookAvailable="bookAvailable"
                 @onProgressChange="onProgressChange"
+                :navigation="navigation"
+                @jumpTo="jumpTo"
                 ref="bottomBar"></bottom-bar>
   </div>
 </template>
@@ -94,7 +96,8 @@ export default {
       ],
       defaultTheme: 0,
       // 图书是否可用
-      bookAvailable: false
+      bookAvailable: false,
+      navigation: {}
     }
   },
   methods: {
@@ -103,12 +106,12 @@ export default {
       // 电子书的渲染
       // 1.生成Ebook
       this.book = new Epub(DOWNLOAD_URL)
-      // 2.生成Rendition，通过Book.renderTo方法生成
+      // 2.生成Rendition，使用Book.renderTo方法生成
       this.rendition = this.book.renderTo('read', {
         width: window.innerWidth,
         height: window.innerHeight
       })
-      // 3.通过Rendition.display渲染电子书
+      // 3.使用Rendition.display渲染电子书
       this.rendition.display()
 
       // 修改字体
@@ -125,14 +128,16 @@ export default {
       })
       // 3.使用Theme.select修改主题(点击时触发)
 
-      // 浏览进度条
-      // 1.生成Locations对象(由于生成Locations对象较消耗性能，故不会自动生成，需要借助epubjs的钩子函数生成)
+      // 浏览进度条 + 目录
+      // 1.浏览进度条--生成Locations对象(由于生成Locations对象较消耗性能，故不会自动生成，需要借助epubjs的钩子函数生成)
       this.book.ready.then(() => {
+        this.navigation = this.book.navigation
         return this.book.locations.generate()
       }).then(() => {
         this.locations = this.book.locations
         this.bookAvailable = true
       })
+      // 2.浏览进度条--触发onProgressChange()
     },
     // 返回上一页
     prevPage() {
@@ -175,8 +180,19 @@ export default {
       const percentage = progress / 100
       // 2.使用Locations.cfiFromPercentafe()进行定位
       const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0
-      // 3.使用Rendition.display()进行展示
+      // 3.使用Rendition.display()渲染电子书
       this.rendition.display(location)
+    },
+    // 根据链接跳转到指定位置
+    jumpTo(href) {
+      this.rendition.display(href)
+      this.hideAll()
+    },
+    // 隐藏topbar和bottombar和目录
+    hideAll() {
+      this.ifShow = false
+      this.$refs.bottomBar.hideSetting()
+      this.$refs.bottomBar.hideContent()
     }
   },
   mounted() {

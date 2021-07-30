@@ -22,6 +22,8 @@
                 :themeList="themeList"
                 :defaultTheme="defaultTheme"
                 @setTheme="setTheme"
+                :bookAvailable="bookAvailable"
+                @onProgressChange="onProgressChange"
                 ref="bottomBar"></bottom-bar>
   </div>
 </template>
@@ -90,7 +92,9 @@ export default {
           }
         },
       ],
-      defaultTheme: 0
+      defaultTheme: 0,
+      // 图书是否可用
+      bookAvailable: false
     }
   },
   methods: {
@@ -120,6 +124,15 @@ export default {
         this.themes.register(theme.name, theme.style)
       })
       // 3.使用Theme.select修改主题(点击时触发)
+
+      // 浏览进度条
+      // 1.生成Locations对象(由于生成Locations对象较消耗性能，故不会自动生成，需要借助epubjs的钩子函数生成)
+      this.book.ready.then(() => {
+        return this.book.locations.generate()
+      }).then(() => {
+        this.locations = this.book.locations
+        this.bookAvailable = true
+      })
     },
     // 返回上一页
     prevPage() {
@@ -154,7 +167,16 @@ export default {
       // bug描述：点击时能够获取点击主题的this.themeList[index].name，但所有主题只能触发一次
       this.themes.select(this.themeList[index].name)
       this.defaultTheme = index
-      console.log(this.themeList[index].name)
+    },
+    // 进度条跳转
+    // progress是进度条数值(0-100)
+    onProgressChange(progress) {
+      // 1.将数值转换为百分比
+      const percentage = progress / 100
+      // 2.使用Locations.cfiFromPercentafe()进行定位
+      const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0
+      // 3.使用Rendition.display()进行展示
+      this.rendition.display(location)
     }
   },
   mounted() {

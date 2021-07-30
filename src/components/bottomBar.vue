@@ -284,8 +284,8 @@ export default {
       @include center;
       padding: 0 px2rem(30);
       box-sizing: border-box;
-      // -webkit-appearance: none;
       .settingProgress {
+        -webkit-appearance: none;
         width: 100%;
         height: px2rem(2);
         background: -webkit-linear-gradient(#999, #999) no-repeat #ddd;
@@ -295,7 +295,7 @@ export default {
         }
         // 被拖动的圆球的样式
         &::-webkit-slider-thumb {
-          // -webkit-appearance: none;
+          -webkit-appearance: none;
           height: px2rem(20);
           width: px2rem(20);
           border-radius: 50%;
@@ -303,6 +303,15 @@ export default {
           box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
           border: px2rem(1) solid #ddd;
         }
+      }
+      .text {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: #333;
+        font-size: px2rem(16);
+        text-align: center;
       }
     }
   }
